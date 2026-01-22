@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import healthkeyLogo from '@/assets/healthkey-app-logo.png';
+import healthkeyLogo from '@/assets/healthkey-logo.png';
 
 const navLinks = [
   { name: 'Home', href: '#home' },
