@@ -34,7 +34,7 @@ export const HeroSection = () => {
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
             className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6"
           >
             Own Your{' '}
@@ -44,7 +44,7 @@ export const HeroSection = () => {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.45, delay: 0.12, ease: 'easeOut' }}
             className="text-xl sm:text-2xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-10"
           >
             Take back control of your personal health information with HealthKey. 
@@ -54,7 +54,7 @@ export const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.35, delay: 0.25, ease: 'easeOut' }}
             className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
           >
             <motion.button
@@ -62,6 +62,7 @@ export const HeroSection = () => {
               className="btn-primary text-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.1 }}
             >
               <span className="relative z-10">Join the Waitlist</span>
             </motion.button>
@@ -71,6 +72,9 @@ export const HeroSection = () => {
               className="btn-secondary text-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.3, ease: 'easeOut' }}
             >
               See How It Works
             </motion.button>
@@ -81,7 +85,7 @@ export const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.4 }}
+          transition={{ duration: 0.9, delay: 0.4, ease: 'easeOut' }}
           className="flex-1 flex justify-center"
         >
           <div className="relative">

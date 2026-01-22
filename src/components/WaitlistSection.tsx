@@ -76,7 +76,7 @@ export const WaitlistSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
           className="max-w-2xl mx-auto"
         >
           <div className="glass-card p-8 sm:p-12 text-center">
@@ -85,8 +85,8 @@ export const WaitlistSection = () => {
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : {}}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-primary to-cyan-400 flex items-center justify-center mb-8"
+                  transition={{ duration: 0.35, delay: 0.1, ease: 'easeOut' }}
+                  className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-8"
                 >
                   <Mail className="w-10 h-10 text-primary-foreground" />
                 </motion.div>
@@ -115,10 +115,15 @@ export const WaitlistSection = () => {
                       className="absolute right-2 top-1/2 -translate-y-1/2 btn-primary py-2 px-6 text-sm"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      transition={{ duration: 0.1 }}
                     >
-                      <span className="relative z-10">
+                      <motion.span 
+                        className="relative z-10"
+                        animate={isSubmitting ? { opacity: [1, 0.5, 1] } : {}}
+                        transition={{ duration: 0.22, repeat: isSubmitting ? Infinity : 0 }}
+                      >
                         {isSubmitting ? 'Joining...' : 'Join Now'}
-                      </span>
+                      </motion.span>
                     </motion.button>
                   </div>
 
@@ -153,9 +158,9 @@ export const WaitlistSection = () => {
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
               >
-                <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-primary to-cyan-400 flex items-center justify-center mb-8 pulse-glow">
+                <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-8 pulse-glow">
                   <Check className="w-10 h-10 text-primary-foreground" />
                 </div>
                 <h2 className="font-display text-3xl font-bold mb-4 gradient-text">
