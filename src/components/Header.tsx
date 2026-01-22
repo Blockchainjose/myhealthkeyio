@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import healthkeyLogo from '@/assets/healthkey-app-logo.png';
 
 const navLinks = [
   { name: 'Home', href: '#home' },
@@ -65,10 +66,12 @@ export const Header = () => {
             whileTap={{ scale: 0.95 }}
           >
             <div className="relative">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-cyan-400 flex items-center justify-center">
-                <span className="font-display font-bold text-primary-foreground text-lg">H</span>
-              </div>
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary to-cyan-400 blur-lg opacity-50" />
+              <img 
+                src={healthkeyLogo} 
+                alt="HealthKey Logo" 
+                className="w-10 h-10 object-contain"
+              />
+              <div className="absolute inset-0 blur-lg opacity-50 bg-primary/30 rounded-xl" />
             </div>
             <span className="font-display font-bold text-xl text-foreground">
               Health<span className="gradient-text">Key</span>

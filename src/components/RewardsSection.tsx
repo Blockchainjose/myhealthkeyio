@@ -35,7 +35,7 @@ export const RewardsSection = () => {
   return (
     <section id="rewards" className="py-24 relative overflow-hidden">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-gold/5 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
 
       <div className="section-container relative z-10" ref={ref}>
         {/* Section Header */}
@@ -49,13 +49,13 @@ export const RewardsSection = () => {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.2 }}
-            className="text-gold font-semibold text-sm uppercase tracking-wider"
+            className="text-primary font-semibold text-sm uppercase tracking-wider"
           >
             $HEALTH Token
           </motion.span>
           <h2 className="font-display text-4xl sm:text-5xl font-bold mt-4 mb-6">
             Get Rewarded for{' '}
-            <span className="bg-gradient-to-r from-gold to-gold/70 bg-clip-text text-transparent">Sharing Data</span>
+            <span className="bg-gradient-to-r from-primary to-emerald-400 bg-clip-text text-transparent">Sharing Data</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Your health data has value. With HealthKey, you finally get to benefit from it.
@@ -86,10 +86,10 @@ export const RewardsSection = () => {
                 onMouseLeave={() => setHoveredCard(null)}
               >
                 <motion.div
-                  className="w-12 h-12 rounded-xl bg-gold/10 flex items-center justify-center mb-4"
+                  className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4"
                   animate={hoveredCard === index ? { scale: 1.1, rotate: 10 } : {}}
                 >
-                  <useCase.icon className="w-6 h-6 text-gold" />
+                  <useCase.icon className="w-6 h-6 text-primary" />
                 </motion.div>
                 <h3 className="font-display text-lg font-semibold mb-2">{useCase.title}</h3>
                 <motion.p

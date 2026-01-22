@@ -1,7 +1,8 @@
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, useTexture, MeshTransmissionMaterial } from '@react-three/drei';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
+import { Float, useTexture } from '@react-three/drei';
 import { useRef, useState, Suspense, useMemo } from 'react';
 import * as THREE from 'three';
+import healthkeyAppLogo from '@/assets/healthkey-app-logo.png';
 
 // Hexagonal shard that orbits the token
 const DataShard = ({ index, total, hovered }: { index: number; total: number; hovered: boolean }) => {
@@ -26,8 +27,8 @@ const DataShard = ({ index, total, hovered }: { index: number; total: number; ho
     <mesh ref={ref}>
       <boxGeometry args={[0.15, 0.25, 0.05]} />
       <meshStandardMaterial
-        color="#4fd1c5"
-        emissive="#4fd1c5"
+        color="#22c55e"
+        emissive="#22c55e"
         emissiveIntensity={hovered ? 1 : 0.5}
         transparent
         opacity={0.8}
@@ -36,22 +37,34 @@ const DataShard = ({ index, total, hovered }: { index: number; total: number; ho
   );
 };
 
-// Main token coin
+// Main token coin with logo texture
 const TokenCoin = ({ hovered }: { hovered: boolean }) => {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
   const pulseRef = useRef(0);
+  
+  // Load the logo texture
+  const logoTexture = useLoader(THREE.TextureLoader, healthkeyAppLogo);
+  
+  // Configure texture
+  useMemo(() => {
+    if (logoTexture) {
+      logoTexture.colorSpace = THREE.SRGBColorSpace;
+      logoTexture.minFilter = THREE.LinearFilter;
+      logoTexture.magFilter = THREE.LinearFilter;
+    }
+  }, [logoTexture]);
 
   useFrame((state) => {
-    if (meshRef.current) {
+    if (groupRef.current) {
       // Gentle rotation
       const targetRotY = hovered ? 0 : Math.sin(state.clock.elapsedTime * 0.3) * 0.15;
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotY, 0.05);
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetRotY, 0.05);
       
       // Tilt toward cursor on hover
       if (hovered) {
-        meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, 0.1, 0.1);
+        groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, 0.1, 0.1);
       } else {
-        meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, 0, 0.05);
+        groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, 0, 0.05);
       }
 
       // Pulse wave effect every 7 seconds
@@ -63,45 +76,49 @@ const TokenCoin = ({ hovered }: { hovered: boolean }) => {
   });
 
   return (
-    <mesh ref={meshRef}>
-      <cylinderGeometry args={[1.2, 1.2, 0.2, 64]} />
-      <meshPhysicalMaterial
-        color="#1a3a4a"
-        metalness={0.9}
-        roughness={0.1}
-        transmission={0.3}
-        thickness={0.5}
-        envMapIntensity={1}
-        clearcoat={1}
-        clearcoatRoughness={0.1}
-        emissive="#4fd1c5"
-        emissiveIntensity={hovered ? 0.4 : 0.2}
-      />
-      
-      {/* H Mark */}
-      <mesh position={[0, 0.11, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.6, 0.75, 6]} />
-        <meshStandardMaterial
-          color="#4fd1c5"
-          emissive="#4fd1c5"
-          emissiveIntensity={hovered ? 2 : 1}
-          side={THREE.DoubleSide}
+    <group ref={groupRef}>
+      {/* Main coin body */}
+      <mesh>
+        <cylinderGeometry args={[1.2, 1.2, 0.2, 64]} />
+        <meshPhysicalMaterial
+          color="#0a2a1a"
+          metalness={0.9}
+          roughness={0.1}
+          transmission={0.3}
+          thickness={0.5}
+          envMapIntensity={1}
+          clearcoat={1}
+          clearcoatRoughness={0.1}
+          emissive="#22c55e"
+          emissiveIntensity={hovered ? 0.4 : 0.2}
         />
       </mesh>
       
-      {/* Inner glow ring */}
-      <mesh position={[0, 0.12, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.3, 0.4, 32]} />
+      {/* Logo on top face */}
+      <mesh position={[0, 0.11, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[2, 2]} />
         <meshStandardMaterial
-          color="#4fd1c5"
-          emissive="#4fd1c5"
+          map={logoTexture}
+          transparent
+          alphaTest={0.1}
+          emissive="#22c55e"
+          emissiveIntensity={hovered ? 0.5 : 0.2}
+        />
+      </mesh>
+      
+      {/* Outer glow ring */}
+      <mesh position={[0, 0.12, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[1.1, 1.25, 64]} />
+        <meshStandardMaterial
+          color="#22c55e"
+          emissive="#22c55e"
           emissiveIntensity={hovered ? 1.5 : 0.8}
           transparent
-          opacity={0.8}
+          opacity={0.6}
           side={THREE.DoubleSide}
         />
       </mesh>
-    </mesh>
+    </group>
   );
 };
 
@@ -131,7 +148,7 @@ const PulseWave = () => {
     <mesh ref={ref} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
       <ringGeometry args={[1.3, 1.5, 64]} />
       <meshBasicMaterial
-        color="#4fd1c5"
+        color="#22c55e"
         transparent
         opacity={opacity}
         side={THREE.DoubleSide}
@@ -148,14 +165,14 @@ const TokenScene = ({ hovered }: { hovered: boolean }) => {
     <>
       {/* Lighting */}
       <ambientLight intensity={0.3} />
-      <pointLight position={[10, 10, 10]} intensity={1} color="#4fd1c5" />
-      <pointLight position={[-10, -10, -10]} intensity={0.5} color="#38bdf8" />
+      <pointLight position={[10, 10, 10]} intensity={1} color="#22c55e" />
+      <pointLight position={[-10, -10, -10]} intensity={0.5} color="#4ade80" />
       <spotLight
         position={[0, 5, 0]}
         angle={0.5}
         penumbra={1}
         intensity={hovered ? 2 : 1}
-        color="#4fd1c5"
+        color="#22c55e"
       />
 
       {/* Floating token */}

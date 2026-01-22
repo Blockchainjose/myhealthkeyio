@@ -1,9 +1,27 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import heroBg from '@/assets/hero-bg.jpg';
-import dataOrb from '@/assets/data-orb.png';
+import healthDataWearable from '@/assets/health-data-wearable.png';
+import healthDataLabs from '@/assets/health-data-labs.png';
+import healthDataMri from '@/assets/health-data-mri.png';
+
+const healthDataImages = [
+  { src: healthDataWearable, alt: 'Wearable Health Data' },
+  { src: healthDataLabs, alt: 'Lab Results' },
+  { src: healthDataMri, alt: 'MRI Scan' },
+];
 
 export const HeroSection = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % healthDataImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
@@ -81,30 +99,56 @@ export const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Data Orb Visual */}
+        {/* Rotating Health Data Images */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.4, ease: 'easeOut' }}
           className="flex-1 flex justify-center"
         >
-          <div className="relative">
-            <motion.img
-              src={dataOrb}
-              alt="HealthKey Data Vault"
-              className="w-72 h-72 sm:w-96 sm:h-96 object-contain"
-              animate={{ 
-                y: [0, -20, 0],
-                rotate: [0, 5, 0, -5, 0]
-              }}
-              transition={{ 
-                duration: 6, 
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
+          <div className="relative w-72 h-72 sm:w-96 sm:h-96">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentImageIndex}
+                initial={{ opacity: 0, rotateY: -90, scale: 0.8 }}
+                animate={{ opacity: 1, rotateY: 0, scale: 1 }}
+                exit={{ opacity: 0, rotateY: 90, scale: 0.8 }}
+                transition={{ duration: 0.6, ease: 'easeInOut' }}
+                className="absolute inset-0"
+              >
+                <motion.img
+                  src={healthDataImages[currentImageIndex].src}
+                  alt={healthDataImages[currentImageIndex].alt}
+                  className="w-full h-full object-contain rounded-2xl"
+                  animate={{ 
+                    y: [0, -10, 0],
+                  }}
+                  transition={{ 
+                    duration: 4, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              </motion.div>
+            </AnimatePresence>
+            
             {/* Glow effect */}
-            <div className="absolute inset-0 blur-3xl bg-primary/20 rounded-full" />
+            <div className="absolute inset-0 blur-3xl bg-primary/20 rounded-full -z-10" />
+            
+            {/* Image indicators */}
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+              {healthDataImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentImageIndex(index)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    index === currentImageIndex 
+                      ? 'bg-primary w-6' 
+                      : 'bg-muted-foreground/40 hover:bg-muted-foreground/60'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
