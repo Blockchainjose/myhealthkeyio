@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Mail, Twitter, Linkedin, Github } from 'lucide-react';
+import healthkeyLogo from '@/assets/healthkey-app-logo.png';
 
 const socialLinks = [
   { icon: Twitter, href: '#', label: 'Twitter' },
@@ -34,8 +35,13 @@ export const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-2">
             <a href="#home" className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-cyan-400 flex items-center justify-center">
-                <span className="font-display font-bold text-primary-foreground text-lg">H</span>
+              <div className="relative">
+                <img 
+                  src={healthkeyLogo} 
+                  alt="HealthKey Logo" 
+                  className="w-12 h-12 object-contain"
+                />
+                <div className="absolute inset-0 blur-xl opacity-60 bg-primary/40 rounded-xl" />
               </div>
               <span className="font-display font-bold text-xl text-foreground">
                 Health<span className="gradient-text">Key</span>
