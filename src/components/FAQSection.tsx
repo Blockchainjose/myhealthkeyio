@@ -53,13 +53,13 @@ export const FAQSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
           className="text-center mb-16"
         >
           <motion.span
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
             className="text-primary font-semibold text-sm uppercase tracking-wider"
           >
             FAQ
@@ -80,7 +80,7 @@ export const FAQSection = () => {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 + index * 0.05 }}
+              transition={{ duration: 0.35, delay: 0.1 + index * 0.05, ease: 'easeOut' }}
               className="faq-accordion"
             >
               <button
@@ -90,7 +90,7 @@ export const FAQSection = () => {
                 <span className="font-display font-semibold text-lg pr-4">{faq.question}</span>
                 <motion.div
                   animate={{ rotate: openIndex === index ? 180 : 0 }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.18 }}
                   className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center"
                 >
                   {openIndex === index ? (
@@ -107,7 +107,7 @@ export const FAQSection = () => {
                   height: openIndex === index ? 'auto' : 0,
                   opacity: openIndex === index ? 1 : 0,
                 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                transition={{ duration: openIndex === index ? 0.25 : 0.2, ease: 'easeInOut' }}
                 className="overflow-hidden"
               >
                 <p className="px-4 pb-4 text-muted-foreground leading-relaxed">

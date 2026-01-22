@@ -40,13 +40,13 @@ export const ProblemSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
           className="text-center mb-16"
         >
           <motion.span
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
             className="text-primary font-semibold text-sm uppercase tracking-wider"
           >
             The Problem
@@ -67,14 +67,15 @@ export const ProblemSection = () => {
               key={problem.title}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
+              transition={{ duration: 0.4, delay: index * 0.12, ease: 'easeOut' }}
+              whileHover={{ scale: 1.03, transition: { duration: 0.15 } }}
               className="glass-card-hover p-8 group"
             >
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
                   <motion.div
-                    className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors"
-                    whileHover={{ rotate: 10 }}
+                    className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-150"
+                    whileHover={{ rotate: 10, transition: { duration: 0.18 } }}
                   >
                     <problem.icon className="w-7 h-7 text-primary" />
                   </motion.div>

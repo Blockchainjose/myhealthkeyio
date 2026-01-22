@@ -41,13 +41,13 @@ export const HowItWorksSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
           className="text-center mb-16"
         >
           <motion.span
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
             className="text-primary font-semibold text-sm uppercase tracking-wider"
           >
             How It Works
@@ -63,8 +63,14 @@ export const HowItWorksSection = () => {
 
         {/* Steps */}
         <div className="relative">
-          {/* Connection Line */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-primary via-cyan-400 to-primary -translate-y-1/2" />
+          {/* Connection Line with draw animation */}
+          <motion.div 
+            className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-primary via-accent to-primary -translate-y-1/2"
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+            style={{ transformOrigin: 'left' }}
+          />
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {steps.map((step, index) => (
@@ -72,7 +78,7 @@ export const HowItWorksSection = () => {
                 key={step.number}
                 initial={{ opacity: 0, y: 50 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.3 + index * 0.2 }}
+                transition={{ duration: 0.4, delay: index * 0.2, ease: 'easeOut' }}
                 className="relative"
               >
                 <div className="glass-card-hover p-8 text-center h-full">

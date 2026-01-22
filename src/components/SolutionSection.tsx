@@ -37,13 +37,13 @@ export const SolutionSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
           className="text-center mb-16"
         >
           <motion.span
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
             className="text-primary font-semibold text-sm uppercase tracking-wider"
           >
             The Solution
@@ -64,12 +64,19 @@ export const SolutionSection = () => {
               key={benefit.text}
               initial={{ opacity: 0, x: -30 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+              transition={{ duration: 0.4, delay: index * 0.15, ease: 'easeOut' }}
+              whileHover={{ scale: 1.03, transition: { duration: 0.15 } }}
               className="glass-card-hover p-6 text-center group"
             >
               <motion.div
-                className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-primary/20 to-cyan-400/20 flex items-center justify-center mb-4 group-hover:from-primary/30 group-hover:to-cyan-400/30 transition-all"
+                className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-4 group-hover:from-primary/30 group-hover:to-accent/30 transition-all"
                 whileHover={{ scale: 1.1, rotate: 5 }}
+                animate={{ 
+                  boxShadow: ['0 0 20px hsl(174 72% 56% / 0.3)', '0 0 40px hsl(174 72% 56% / 0.5)', '0 0 20px hsl(174 72% 56% / 0.3)']
+                }}
+                transition={{ 
+                  boxShadow: { duration: 2.5, repeat: Infinity, ease: 'easeInOut' }
+                }}
               >
                 <benefit.icon className="w-8 h-8 text-primary" />
               </motion.div>

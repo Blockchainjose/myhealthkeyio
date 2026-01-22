@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Coins, Sparkles, ShoppingCart, Zap } from 'lucide-react';
-import healthToken from '@/assets/health-token.png';
+import { HealthToken3D } from './HealthToken3D';
 
 const tokenUseCases = [
   {
@@ -55,7 +55,7 @@ export const RewardsSection = () => {
           </motion.span>
           <h2 className="font-display text-4xl sm:text-5xl font-bold mt-4 mb-6">
             Get Rewarded for{' '}
-            <span className="bg-gradient-to-r from-gold to-amber-400 bg-clip-text text-transparent">Sharing Data</span>
+            <span className="bg-gradient-to-r from-gold to-gold/70 bg-clip-text text-transparent">Sharing Data</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Your health data has value. With HealthKey, you finally get to benefit from it.
@@ -63,51 +63,14 @@ export const RewardsSection = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Token Visual */}
+          {/* 3D Token Visual */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.9, delay: 0.4 }}
             className="flex justify-center order-2 lg:order-1"
           >
-            <div className="relative">
-              <motion.img
-                src={healthToken}
-                alt="$HEALTH Token"
-                className="w-64 h-64 sm:w-80 sm:h-80 object-contain"
-                animate={{ 
-                  y: [0, -15, 0],
-                  rotateY: [0, 10, 0, -10, 0]
-                }}
-                transition={{ 
-                  duration: 5, 
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-              {/* Glow effect */}
-              <div className="absolute inset-0 blur-3xl bg-gold/30 rounded-full -z-10" />
-              {/* Floating particles */}
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-2 h-2 bg-gold rounded-full"
-                  style={{
-                    top: `${20 + i * 10}%`,
-                    left: `${10 + i * 15}%`,
-                  }}
-                  animate={{
-                    y: [0, -20, 0],
-                    opacity: [0.3, 1, 0.3],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    delay: i * 0.5,
-                  }}
-                />
-              ))}
-            </div>
+            <HealthToken3D className="w-80 h-80 sm:w-96 sm:h-96" />
           </motion.div>
 
           {/* Use Cases */}
