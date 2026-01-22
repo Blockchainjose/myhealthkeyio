@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import healthkeyLogo from '@/assets/healthkey-logo.png';
+import healthkeyLogo from '@/assets/healthkey-app-logo.png';
 
 const navLinks = [
   { name: 'Home', href: '#home' },
@@ -69,9 +69,9 @@ export const Header = () => {
               <img 
                 src={healthkeyLogo} 
                 alt="HealthKey Logo" 
-                className="w-10 h-10 object-contain"
+                className="w-12 h-12 object-contain"
               />
-              <div className="absolute inset-0 blur-lg opacity-50 bg-primary/30 rounded-xl" />
+              <div className="absolute inset-0 blur-xl opacity-60 bg-primary/40 rounded-xl" />
             </div>
             <span className="font-display font-bold text-xl text-foreground">
               Health<span className="gradient-text">Key</span>
