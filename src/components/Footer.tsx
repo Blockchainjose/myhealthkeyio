@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Mail, Linkedin, Github } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import healthkeyLogo from '@/assets/healthkey-app-logo.png';
 
 // Custom X (formerly Twitter) icon component
@@ -17,13 +18,13 @@ const XIcon = ({ className }: { className?: string }) => (
 const socialLinks = [
   { icon: XIcon, href: 'https://x.com/HealthKeyPro', label: 'X' },
   { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Github, href: '#', label: 'GitHub' },
+  { icon: Github, href: 'https://github.com/Blockchainjose/Healthkey-Protocol', label: 'GitHub' },
 ];
 
 const footerLinks = [
-  { name: 'Privacy Policy', href: '#' },
-  { name: 'Terms of Service', href: '#' },
-  { name: 'Security', href: '#' },
+  { name: 'Privacy Policy', href: '/privacy-policy' },
+  { name: 'Terms of Service', href: '/terms-of-service' },
+  { name: 'Security', href: '/security' },
 ];
 
 export const Footer = () => {
@@ -77,13 +78,13 @@ export const Footer = () => {
             <ul className="space-y-3">
               {footerLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="text-muted-foreground hover:text-primary transition-colors relative group"
                   >
                     {link.name}
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
