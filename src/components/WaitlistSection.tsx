@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState, FormEvent } from 'react';
-import { Mail, Check, ShieldCheck, X, Bell } from 'lucide-react';
+import { Mail, Check, ShieldCheck, X, Bell, User } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const trustBadges = [
@@ -13,6 +13,7 @@ const trustBadges = [
 export const WaitlistSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -22,6 +23,13 @@ export const WaitlistSection = () => {
     e.preventDefault();
     setError('');
 
+    // Validate name
+    if (!name.trim()) {
+      setError('Please enter your name');
+      return;
+    }
+
+    // Validate email
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError('Please enter a valid email address');
       return;
@@ -29,19 +37,36 @@ export const WaitlistSection = () => {
 
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setIsSuccess(true);
+    try {
+      const response = await fetch('/api/reach-signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+        }),
+      });
 
-    // Fire confetti
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#4DD8E6', '#22D3EE', '#0EA5E9', '#FCD34D'],
-    });
+      if (!response.ok) {
+        throw new Error('Submission failed');
+      }
+
+      setIsSuccess(true);
+
+      // Fire confetti
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#4DD8E6', '#22D3EE', '#0EA5E9', '#FCD34D'],
+      });
+    } catch (err) {
+      setError('There was an issue submitting your request. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -99,43 +124,83 @@ export const WaitlistSection = () => {
                   Be the first to access your health data vault. Early members get exclusive benefits.
                 </p>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="relative">
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email address"
-                      className="glass-input pr-32"
-                      disabled={isSubmitting}
-                    />
-                    <motion.button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 btn-primary py-2 px-6 text-sm"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ duration: 0.1 }}
-                    >
-                      <motion.span 
-                        className="relative z-10"
-                        animate={isSubmitting ? { opacity: [1, 0.5, 1] } : {}}
-                        transition={{ duration: 0.22, repeat: isSubmitting ? Infinity : 0 }}
-                      >
-                        {isSubmitting ? 'Joining...' : 'Join Now'}
-                      </motion.span>
-                    </motion.button>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Name Field */}
+                    <div className="relative">
+                      <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                        Full Name
+                      </label>
+                      <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                        <input
+                          id="name"
+                          type="text"
+                          name="name"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="Your Name"
+                          className="glass-input pl-11 w-full"
+                          disabled={isSubmitting}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    {/* Email Field */}
+                    <div className="relative">
+                      <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                        Email Address
+                      </label>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                        <input
+                          id="email"
+                          type="email"
+                          name="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="you@example.com"
+                          className="glass-input pl-11 w-full"
+                          disabled={isSubmitting}
+                          required
+                        />
+                      </div>
+                    </div>
                   </div>
+
+                  {/* Submit Button */}
+                  <motion.button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="btn-primary w-full sm:w-auto sm:px-12 py-3 text-base font-semibold"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.1 }}
+                  >
+                    <motion.span 
+                      className="relative z-10"
+                      animate={isSubmitting ? { opacity: [1, 0.5, 1] } : {}}
+                      transition={{ duration: 0.22, repeat: isSubmitting ? Infinity : 0 }}
+                    >
+                      {isSubmitting ? 'Joining...' : 'Join Waitlist'}
+                    </motion.span>
+                  </motion.button>
 
                   {error && (
                     <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="text-destructive text-sm"
+                      className="text-destructive text-sm text-center"
                     >
                       {error}
                     </motion.p>
                   )}
+
+                  {/* Privacy Disclaimer */}
+                  <p className="text-xs text-muted-foreground text-center">
+                    We respect your privacy. No spam. You can unsubscribe anytime.
+                  </p>
                 </form>
 
                 {/* Trust Badges */}
@@ -167,7 +232,7 @@ export const WaitlistSection = () => {
                   You're on the list!
                 </h2>
                 <p className="text-lg text-muted-foreground">
-                  Thanks for joining! We'll be in touch soon with exclusive updates and early access.
+                  Thank you! You're now on the HealthKey Waitlist. Check your email for confirmation.
                 </p>
               </motion.div>
             )}
