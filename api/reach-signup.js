@@ -1,13 +1,15 @@
-export default async function handler(req, res) {
+module.exports = async function (req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    res.status(405).json({ error: "Method not allowed" });
+    return;
   }
 
   try {
     const { name, email } = req.body;
 
     if (!email) {
-      return res.status(400).json({ error: "Email is required" });
+      res.status(400).json({ error: "Email is required" });
+      return;
     }
 
     const response = await fetch("https://api.hostinger.com/reach/v1/contacts", {
@@ -17,23 +19,20 @@ export default async function handler(req, res) {
         "Authorization": `Token ${process.env.REACH_API_KEY}`
       },
       body: JSON.stringify({
-        email: email,
-        attributes: {
-          name: name
-        },
+        email,
+        attributes: { name },
         tags: ["Waitlist"]
       })
     });
 
     if (!response.ok) {
-      const error = await response.text();
-      return res.status(400).json({ error: `Hostinger Reach error: ${error}` });
+      const errorText = await response.text();
+      res.status(500).json({ error: errorText });
+      return;
     }
 
-    return res.status(200).json({ success: true });
-
-  } catch (err) {
-    return res.status(500).json({ error: "Server error", details: err.message });
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-}
-
+};
