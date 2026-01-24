@@ -1,14 +1,30 @@
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { motion } from 'framer-motion';
+import { SEOHead } from '@/components/SEOHead';
+import { BreadcrumbSchema } from '@/components/StructuredData';
+
+const BASE_URL = 'https://myhealthkey.io';
 
 const TermsOfService = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Terms of Service | HealthKey - Health Data Ownership Platform"
+        description="Read HealthKey's Terms of Service. Understand your rights as a user, our data policies, $HEALTH token rewards, and how we protect your health information."
+        canonicalUrl={`${BASE_URL}/terms-of-service`}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: BASE_URL },
+          { name: 'Terms of Service', url: `${BASE_URL}/terms-of-service` },
+        ]}
+      />
+      
       <Header />
       <main className="pt-32 pb-20">
         <div className="section-container">
-          <motion.div
+          <motion.article
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -111,7 +127,7 @@ const TermsOfService = () => {
                 </p>
               </section>
             </div>
-          </motion.div>
+          </motion.article>
         </div>
       </main>
       <Footer />

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github } from 'lucide-react';
+import { Mail, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import healthkeyLogo from '@/assets/healthkey-app-logo.png';
 
@@ -17,7 +17,6 @@ const XIcon = ({ className }: { className?: string }) => (
 
 const socialLinks = [
   { icon: XIcon, href: 'https://x.com/HealthKeyPro', label: 'X' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
   { icon: Github, href: 'https://github.com/Blockchainjose/Healthkey-Protocol', label: 'GitHub' },
 ];
 
@@ -98,6 +97,8 @@ export const Footer = () => {
                 <motion.a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.label}
                   className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all"
                   whileHover={{ scale: 1.1, y: -2 }}
