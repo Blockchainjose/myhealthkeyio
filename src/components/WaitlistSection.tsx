@@ -38,16 +38,27 @@ export const WaitlistSection = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://myhealthkey.io/api/reach-signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `https://api.beehiiv.com/v2/publications/${import.meta.env.VITE_BEEHIIV_PUBLICATION_ID}/subscriptions`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_BEEHIIV_API_KEY}`,
+          },
+          body: JSON.stringify({
+            email: email.trim(),
+            custom_fields: {
+              full_name: name.trim(),
+            },
+            reactivate_existing: false,
+            send_welcome_email: false,
+            utm_source: "healthkey-website",
+            utm_medium: "waitlist",
+            utm_campaign: "landing",
+          }),
         },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-        }),
-      });
+      );
 
       if (!response.ok) {
         throw new Error("Submission failed");
