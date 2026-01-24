@@ -37,6 +37,7 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (!response.ok) {
+      console.error("Beehiiv API Error:", data);
       return res.status(500).json({ error: data });
     }
 
