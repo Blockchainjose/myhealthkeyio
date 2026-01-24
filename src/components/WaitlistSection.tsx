@@ -1,47 +1,47 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef, useState, FormEvent } from 'react';
-import { Mail, Check, ShieldCheck, X, Bell, User } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef, useState, FormEvent } from "react";
+import { Mail, Check, ShieldCheck, X, Bell, User } from "lucide-react";
+import confetti from "canvas-confetti";
 
 const trustBadges = [
-  { icon: ShieldCheck, text: 'No spam' },
-  { icon: X, text: 'Cancel anytime' },
-  { icon: Bell, text: 'No obligation' },
+  { icon: ShieldCheck, text: "No spam" },
+  { icon: X, text: "Cancel anytime" },
+  { icon: Bell, text: "No obligation" },
 ];
 
 export const WaitlistSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     // Validate name
     if (!name.trim()) {
-      setError('Please enter your name');
+      setError("Please enter your name");
       return;
     }
 
     // Validate email
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Please enter a valid email address');
+      setError("Please enter a valid email address");
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
-      const response = await fetch('/api/reach-signup', {
-        method: 'POST',
+      const response = await fetch("https://myhealthkey.io/api/reach-signup", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: name.trim(),
@@ -50,7 +50,7 @@ export const WaitlistSection = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Submission failed');
+        throw new Error("Submission failed");
       }
 
       setIsSuccess(true);
@@ -60,10 +60,10 @@ export const WaitlistSection = () => {
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#4DD8E6', '#22D3EE', '#0EA5E9', '#FCD34D'],
+        colors: ["#4DD8E6", "#22D3EE", "#0EA5E9", "#FCD34D"],
       });
     } catch (err) {
-      setError('There was an issue submitting your request. Please try again.');
+      setError("There was an issue submitting your request. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -73,7 +73,7 @@ export const WaitlistSection = () => {
     <section id="waitlist" className="py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
-      
+
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
@@ -101,7 +101,7 @@ export const WaitlistSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
           className="max-w-2xl mx-auto"
         >
           <div className="glass-card p-8 sm:p-12 text-center">
@@ -110,15 +110,14 @@ export const WaitlistSection = () => {
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={isInView ? { scale: 1 } : {}}
-                  transition={{ duration: 0.35, delay: 0.1, ease: 'easeOut' }}
+                  transition={{ duration: 0.35, delay: 0.1, ease: "easeOut" }}
                   className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-8"
                 >
                   <Mail className="w-10 h-10 text-primary-foreground" />
                 </motion.div>
 
                 <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
-                  Join the{' '}
-                  <span className="gradient-text">Waitlist</span>
+                  Join the <span className="gradient-text">Waitlist</span>
                 </h2>
                 <p className="text-lg text-muted-foreground mb-8">
                   Be the first to access your health data vault. Early members get exclusive benefits.
@@ -178,12 +177,12 @@ export const WaitlistSection = () => {
                     whileTap={{ scale: 0.98 }}
                     transition={{ duration: 0.1 }}
                   >
-                    <motion.span 
+                    <motion.span
                       className="relative z-10"
                       animate={isSubmitting ? { opacity: [1, 0.5, 1] } : {}}
                       transition={{ duration: 0.22, repeat: isSubmitting ? Infinity : 0 }}
                     >
-                      {isSubmitting ? 'Joining...' : 'Join Waitlist'}
+                      {isSubmitting ? "Joining..." : "Join Waitlist"}
                     </motion.span>
                   </motion.button>
 
@@ -223,14 +222,12 @@ export const WaitlistSection = () => {
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.35, ease: 'easeOut' }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
               >
                 <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mb-8 pulse-glow">
                   <Check className="w-10 h-10 text-primary-foreground" />
                 </div>
-                <h2 className="font-display text-3xl font-bold mb-4 gradient-text">
-                  You're on the list!
-                </h2>
+                <h2 className="font-display text-3xl font-bold mb-4 gradient-text">You're on the list!</h2>
                 <p className="text-lg text-muted-foreground">
                   Thank you! You're now on the HealthKey Waitlist. Check your email for confirmation.
                 </p>
