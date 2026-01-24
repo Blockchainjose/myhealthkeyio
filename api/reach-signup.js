@@ -18,7 +18,9 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         email: email,
-        name: name || "",
+        attributes: {
+          name: name
+        },
         tags: ["Waitlist"]
       })
     });
