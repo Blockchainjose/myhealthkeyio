@@ -23,7 +23,8 @@ export default async function handler(req, res) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Token ${process.env.REACH_API_KEY}`
+        "Authorization": `Bearer ${process.env.REACH_API_KEY}`
+
       },
       body: JSON.stringify({
         email,
