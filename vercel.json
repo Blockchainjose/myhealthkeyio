@@ -1,13 +1,13 @@
 {
-  "version": 2,
   "functions": {
-    "api/*.mjs": {
+    "api/**/*.mjs": {
       "runtime": "nodejs18.x"
     }
   },
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.mjs" }
-  ],
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+    {
+      "src": "/api/reach-signup",
+      "dest": "/api/reach-signup.mjs"
+    }
+  ]
 }
