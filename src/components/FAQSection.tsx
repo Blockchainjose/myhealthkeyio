@@ -2,8 +2,9 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
+import { FAQSchema } from '@/components/StructuredData';
 
-const faqs = [
+export const faqs = [
   {
     question: 'What is HealthKey?',
     answer: 'HealthKey is a blockchain-powered platform that gives you complete ownership and control over your personal health data. You decide who can access it, for how long, and you get rewarded for sharing.',
@@ -44,7 +45,10 @@ export const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section id="faq" className="py-24 relative overflow-hidden">
+    <section id="faq" className="py-24 relative overflow-hidden" aria-labelledby="faq-heading">
+      {/* FAQ Schema for SEO */}
+      <FAQSchema faqs={faqs} />
+      
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/10 to-background" />
 
@@ -64,17 +68,17 @@ export const FAQSection = () => {
           >
             FAQ
           </motion.span>
-          <h2 className="font-display text-4xl sm:text-5xl font-bold mt-4 mb-6">
+          <h2 id="faq-heading" className="font-display text-4xl sm:text-5xl font-bold mt-4 mb-6">
             Frequently Asked{' '}
             <span className="gradient-text">Questions</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Got questions? We've got answers. If you can't find what you're looking for, reach out to us.
+            Got questions about health data ownership and Web3 health apps? We've got answers.
           </p>
         </motion.div>
 
         {/* FAQ Accordion */}
-        <div className="max-w-3xl mx-auto space-y-4">
+        <div className="max-w-3xl mx-auto space-y-4" role="list">
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
@@ -82,10 +86,13 @@ export const FAQSection = () => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.35, delay: 0.1 + index * 0.05, ease: 'easeOut' }}
               className="faq-accordion"
+              role="listitem"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full flex items-center justify-between p-4 text-left"
+                aria-expanded={openIndex === index}
+                aria-controls={`faq-answer-${index}`}
               >
                 <span className="font-display font-semibold text-lg pr-4">{faq.question}</span>
                 <motion.div
@@ -94,14 +101,15 @@ export const FAQSection = () => {
                   className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center"
                 >
                   {openIndex === index ? (
-                    <Minus className="w-4 h-4 text-primary" />
+                    <Minus className="w-4 h-4 text-primary" aria-hidden="true" />
                   ) : (
-                    <Plus className="w-4 h-4 text-primary" />
+                    <Plus className="w-4 h-4 text-primary" aria-hidden="true" />
                   )}
                 </motion.div>
               </button>
 
               <motion.div
+                id={`faq-answer-${index}`}
                 initial={false}
                 animate={{
                   height: openIndex === index ? 'auto' : 0,
@@ -109,6 +117,8 @@ export const FAQSection = () => {
                 }}
                 transition={{ duration: openIndex === index ? 0.25 : 0.2, ease: 'easeInOut' }}
                 className="overflow-hidden"
+                role="region"
+                aria-labelledby={`faq-question-${index}`}
               >
                 <p className="px-4 pb-4 text-muted-foreground leading-relaxed">
                   {faq.answer}

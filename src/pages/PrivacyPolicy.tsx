@@ -1,20 +1,35 @@
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { motion } from 'framer-motion';
+import { SEOHead } from '@/components/SEOHead';
+import { BreadcrumbSchema } from '@/components/StructuredData';
+
+const BASE_URL = 'https://myhealthkey.io';
+
 const PrivacyPolicy = () => {
-  return <div className="min-h-screen bg-background">
+  return (
+    <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Privacy Policy | HealthKey - Your Health Data, Your Rules"
+        description="Learn how HealthKey protects your health data privacy. We don't collect or sell personal health data. You own and control your information with end-to-end encryption."
+        canonicalUrl={`${BASE_URL}/privacy-policy`}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: BASE_URL },
+          { name: 'Privacy Policy', url: `${BASE_URL}/privacy-policy` },
+        ]}
+      />
+      
       <Header />
       <main className="pt-32 pb-20">
         <div className="section-container">
-          <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.6
-        }} className="max-w-4xl mx-auto">
+          <motion.article
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl mx-auto"
+          >
             <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
               Privacy <span className="gradient-text">Policy</span>
             </h1>
@@ -22,7 +37,9 @@ const PrivacyPolicy = () => {
             <p className="text-muted-foreground mb-8">Last Updated: October 2025</p>
 
             <div className="glass-card p-8 space-y-8">
-              <p className="text-foreground/90 leading-relaxed">HealthKey Protocol website is owned by HealthKey Labs, LLC, at HealthKey Protocol ("HealthKey," "we," "our," "us"). Your privacy is our highest priority. We believe that you own and control your health data. Our role is to provide the technology that enables you to decide when, how, and with whom your data is shared.</p>
+              <p className="text-foreground/90 leading-relaxed">
+                HealthKey Protocol website is owned by Block Health Labs, LLC, at HealthKey Protocol ("HealthKey," "we," "our," "us"). Your privacy is our highest priority. We believe that you own and control your health data. Our role is to provide the technology that enables you to decide when, how, and with whom your data is shared.
+              </p>
 
               <section>
                 <h2 className="font-display text-2xl font-semibold mb-4 text-primary">1. Data We Do Not Collect</h2>
@@ -108,10 +125,12 @@ const PrivacyPolicy = () => {
                 </p>
               </section>
             </div>
-          </motion.div>
+          </motion.article>
         </div>
       </main>
       <Footer />
-    </div>;
+    </div>
+  );
 };
+
 export default PrivacyPolicy;

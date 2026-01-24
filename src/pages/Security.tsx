@@ -2,10 +2,25 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { motion } from 'framer-motion';
 import { Shield, Lock, Database, Ban, CheckCircle } from 'lucide-react';
+import { SEOHead } from '@/components/SEOHead';
+import { BreadcrumbSchema } from '@/components/StructuredData';
+
+const BASE_URL = 'https://myhealthkey.io';
 
 const Security = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Security | HealthKey - Enterprise-Grade Health Data Protection"
+        description="Discover how HealthKey secures your health data with end-to-end encryption, off-chain storage, and blockchain-verified permissions. HIPAA and GDPR aligned practices."
+        canonicalUrl={`${BASE_URL}/security`}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: BASE_URL },
+          { name: 'Security', url: `${BASE_URL}/security` },
+        ]}
+      />
       <Header />
       <main className="pt-32 pb-20">
         <div className="section-container">
