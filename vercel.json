@@ -1,8 +1,8 @@
 {
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/beehiv-signup",
-      "dest": "/api/beehiv-signup.js"
+      "source": "/api/beehiv-signup",
+      "destination": "/api/beehiv-signup.js"
     }
   ],
   "headers": [
@@ -15,4 +15,3 @@
     }
   ]
 }
-
