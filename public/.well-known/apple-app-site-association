@@ -1,0 +1,22 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "XRTB69X6JB.com.healthkey.mobile",
+        "paths": [
+          "/oauth/*",
+          "/phantom/*",
+          "/auth/*",
+          "/login/*",
+          "/*"
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "XRTB69X6JB.com.healthkey.mobile"
+    ]
+  }
+}
