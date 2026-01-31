@@ -3,6 +3,10 @@
     {
       "source": "/api/beehiv-signup",
       "destination": "/api/beehiv-signup.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
