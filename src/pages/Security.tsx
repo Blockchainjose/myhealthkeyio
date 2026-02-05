@@ -11,9 +11,10 @@ const Security = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Security | HealthKey - Enterprise-Grade Health Data Protection"
-        description="Discover how HealthKey secures your health data with end-to-end encryption, off-chain storage, and blockchain-verified permissions. HIPAA and GDPR aligned practices."
+        title="Security - HealthKey Protocol | Enterprise-Grade Data Protection"
+        description="HealthKey Protocol uses enterprise-grade encryption and blockchain security to protect your health data. Learn about our security measures and HIPAA compliance."
         canonicalUrl={`${BASE_URL}/security`}
+        keywords="health data security, blockchain encryption, HIPAA compliance, data protection, enterprise security, Solana security"
       />
       <BreadcrumbSchema
         items={[

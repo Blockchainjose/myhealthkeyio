@@ -18,6 +18,18 @@ interface BreadcrumbItem {
   url: string;
 }
 
+interface SoftwareApplicationSchemaProps {
+  name: string;
+  description: string;
+  url: string;
+  applicationCategory: string;
+  operatingSystem?: string;
+  offers?: {
+    price: string;
+    priceCurrency: string;
+  };
+}
+
 // Organization Schema
 export const OrganizationSchema = ({
   name,
@@ -38,6 +50,8 @@ export const OrganizationSchema = ({
       logo,
       description,
       sameAs,
+      foundingDate: '2024',
+      industry: 'Health Technology',
       contactPoint: {
         '@type': 'ContactPoint',
         email: 'contact@myhealthkey.io',
@@ -71,6 +85,8 @@ export const WebsiteSchema = ({ url, name }: { url: string; name: string }) => {
       '@type': 'WebSite',
       url,
       name,
+      description: 'Own, control, and monetize your health data on Solana blockchain',
+      inLanguage: 'en-US',
       potentialAction: {
         '@type': 'SearchAction',
         target: `${url}?q={search_term_string}`,
@@ -88,6 +104,48 @@ export const WebsiteSchema = ({ url, name }: { url: string; name: string }) => {
       script.remove();
     };
   }, [url, name]);
+
+  return null;
+};
+
+// Software Application Schema
+export const SoftwareApplicationSchema = ({
+  name,
+  description,
+  url,
+  applicationCategory,
+  operatingSystem = 'iOS, Android, Web',
+  offers,
+}: SoftwareApplicationSchemaProps) => {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'software-application-schema';
+    script.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name,
+      description,
+      url,
+      applicationCategory,
+      operatingSystem,
+      offers: offers || {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+    });
+
+    const existingScript = document.getElementById('software-application-schema');
+    if (existingScript) {
+      existingScript.remove();
+    }
+    document.head.appendChild(script);
+
+    return () => {
+      script.remove();
+    };
+  }, [name, description, url, applicationCategory, operatingSystem, offers]);
 
   return null;
 };

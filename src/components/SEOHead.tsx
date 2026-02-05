@@ -7,15 +7,20 @@ interface SEOHeadProps {
   ogImage?: string;
   type?: 'website' | 'article';
   noIndex?: boolean;
+  keywords?: string;
 }
+
+const DEFAULT_OG_IMAGE = 'https://myhealthkey.io/og-image.png';
+const SITE_NAME = 'HealthKey Protocol';
 
 export const SEOHead = ({
   title,
   description,
   canonicalUrl,
-  ogImage = 'https://storage.googleapis.com/gpt-engineer-file-uploads/XgUFzih4Xrhjpq4kYIcgapwLciy1/uploads/1769133142361-HealthKey app logo (1024 x 1024 px).png',
+  ogImage = DEFAULT_OG_IMAGE,
   type = 'website',
   noIndex = false,
+  keywords = 'health data ownership, Web3 health, Solana health data, wearable data monetization, health data wallet, blockchain health records, HIPAA compliant, $HEALTH token',
 }: SEOHeadProps) => {
   useEffect(() => {
     // Update document title
@@ -35,22 +40,30 @@ export const SEOHead = ({
 
     // Standard meta tags
     updateMetaTag('description', description);
+    updateMetaTag('keywords', keywords);
+    updateMetaTag('author', 'HealthKey Protocol');
     
     // Open Graph tags
     updateMetaTag('og:title', title, true);
     updateMetaTag('og:description', description, true);
     updateMetaTag('og:type', type, true);
     updateMetaTag('og:image', ogImage, true);
+    updateMetaTag('og:image:width', '1200', true);
+    updateMetaTag('og:image:height', '630', true);
+    updateMetaTag('og:site_name', SITE_NAME, true);
     
     // Twitter Card tags
+    updateMetaTag('twitter:card', 'summary_large_image');
+    updateMetaTag('twitter:site', '@HealthKeyPro');
+    updateMetaTag('twitter:creator', '@HealthKeyPro');
     updateMetaTag('twitter:title', title);
     updateMetaTag('twitter:description', description);
     updateMetaTag('twitter:image', ogImage);
-    updateMetaTag('twitter:card', 'summary_large_image');
 
     // Canonical URL
     if (canonicalUrl) {
       updateMetaTag('og:url', canonicalUrl, true);
+      updateMetaTag('twitter:url', canonicalUrl);
       let canonicalLink = document.querySelector('link[rel="canonical"]');
       if (!canonicalLink) {
         canonicalLink = document.createElement('link');
@@ -63,8 +76,10 @@ export const SEOHead = ({
     // Robots meta
     if (noIndex) {
       updateMetaTag('robots', 'noindex, nofollow');
+    } else {
+      updateMetaTag('robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
     }
-  }, [title, description, canonicalUrl, ogImage, type, noIndex]);
+  }, [title, description, canonicalUrl, ogImage, type, noIndex, keywords]);
 
   return null;
 };

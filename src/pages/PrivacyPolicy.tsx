@@ -1,8 +1,26 @@
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { motion } from 'framer-motion';
+import { SEOHead } from '@/components/SEOHead';
+import { BreadcrumbSchema } from '@/components/StructuredData';
+
+const BASE_URL = 'https://myhealthkey.io';
+
 const PrivacyPolicy = () => {
-  return <div className="min-h-screen bg-background">
+  return (
+    <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Privacy Policy - HealthKey Protocol | Your Data Rights"
+        description="Learn how HealthKey Protocol protects your health data privacy. We never sell your data. You own and control your personal health information on the blockchain."
+        canonicalUrl={`${BASE_URL}/privacy-policy`}
+        keywords="health data privacy, HIPAA compliant, data protection, blockchain privacy, health records security"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: BASE_URL },
+          { name: 'Privacy Policy', url: `${BASE_URL}/privacy-policy` },
+        ]}
+      />
       <Header />
       <main className="pt-32 pb-20">
         <div className="section-container">
@@ -112,6 +130,7 @@ const PrivacyPolicy = () => {
         </div>
       </main>
       <Footer />
-    </div>;
+    </div>
+  );
 };
 export default PrivacyPolicy;
