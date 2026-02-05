@@ -9,29 +9,38 @@ import { WaitlistSection } from '@/components/WaitlistSection';
 import { FAQSection } from '@/components/FAQSection';
 import { Footer } from '@/components/Footer';
 import { SEOHead } from '@/components/SEOHead';
-import { OrganizationSchema, WebsiteSchema } from '@/components/StructuredData';
+import { OrganizationSchema, WebsiteSchema, SoftwareApplicationSchema } from '@/components/StructuredData';
 
 const BASE_URL = 'https://myhealthkey.io';
+const OG_IMAGE = 'https://myhealthkey.io/og-image.png';
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       <SEOHead
-        title="HealthKey - Own Your Health Data | Secure Blockchain Health Platform"
-        description="Take control of your personal health information with HealthKey. Own, control, and benefit from your health data through secure blockchain technology. Join the Web3 health revolution."
+        title="HealthKey Protocol - Own & Monetize Your Health Data on Solana"
+        description="Take control of your health data with HealthKey. Own, monetize, and share your wearable data, lab results, and medical records on Solana blockchain. Join the Web3 health revolution."
         canonicalUrl={BASE_URL}
+        ogImage={OG_IMAGE}
+        keywords="health data ownership, Web3 health, Solana health data, wearable data monetization, health data wallet, blockchain health records, $HEALTH token, AI health companion"
       />
       <OrganizationSchema
-        name="HealthKey"
+        name="HealthKey Protocol"
         url={BASE_URL}
-        logo="https://storage.googleapis.com/gpt-engineer-file-uploads/XgUFzih4Xrhjpq4kYIcgapwLciy1/uploads/1769133142361-HealthKey app logo (1024 x 1024 px).png"
-        description="HealthKey is a blockchain-powered platform that gives you complete ownership and control over your personal health data."
+        logo={`${BASE_URL}/healthkey-logo.png`}
+        description="HealthKey Protocol is a Solana-powered platform that gives you complete ownership, control, and monetization of your personal health data."
         sameAs={[
           'https://x.com/HealthKeyPro',
           'https://github.com/Blockchainjose/Healthkey-Protocol',
         ]}
       />
-      <WebsiteSchema url={BASE_URL} name="HealthKey" />
+      <WebsiteSchema url={BASE_URL} name="HealthKey Protocol" />
+      <SoftwareApplicationSchema
+        name="HealthKey"
+        description="Your personal health data wallet. Own, control, and monetize your wearable data, lab results, and medical records on Solana blockchain."
+        url={BASE_URL}
+        applicationCategory="HealthApplication"
+      />
       
       <Header />
       <main>

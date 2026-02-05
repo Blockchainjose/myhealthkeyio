@@ -4,6 +4,13 @@ import { PostHogProvider } from "@posthog/react";
 import App from "./App.tsx";
 import "./index.css";
 
+// Extend window type for PostHog
+declare global {
+  interface Window {
+    posthog?: typeof posthog;
+  }
+}
+
 // Initialize PostHog only if the API key exists
 const posthogKey = import.meta.env.VITE_PUBLIC_POSTHOG_KEY;
 

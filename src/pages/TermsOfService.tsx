@@ -10,9 +10,10 @@ const TermsOfService = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Terms of Service | HealthKey - Health Data Ownership Platform"
-        description="Read HealthKey's Terms of Service. Understand your rights as a user, our data policies, $HEALTH token rewards, and how we protect your health information."
+        title="Terms of Service - HealthKey Protocol | User Agreement"
+        description="Read the HealthKey Protocol terms of service. Understand your rights and responsibilities when using our health data ownership platform on Solana."
         canonicalUrl={`${BASE_URL}/terms-of-service`}
+        keywords="terms of service, user agreement, health data terms, blockchain terms, Solana platform terms"
       />
       <BreadcrumbSchema
         items={[

@@ -13,10 +13,23 @@ const navLinks = [
   { name: 'FAQ', href: '#faq', isRoute: false },
 ];
 
+// Logo spin animation variants
+const logoSpinVariants = {
+  initial: { rotateY: 0 },
+  spin: {
+    rotateY: 360,
+    transition: {
+      duration: 3.5,
+      ease: [0.4, 0, 0.2, 1] as const,
+    },
+  },
+};
+
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [shouldSpin, setShouldSpin] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -31,6 +44,27 @@ export const Header = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Periodic spin animation every 8-12 seconds
+  useEffect(() => {
+    const triggerSpin = () => {
+      setShouldSpin(true);
+      setTimeout(() => setShouldSpin(false), 3500);
+    };
+    
+    // Initial spin after 3 seconds
+    const initialTimeout = setTimeout(triggerSpin, 3000);
+    
+    // Then spin every 8-12 seconds randomly
+    const interval = setInterval(() => {
+      triggerSpin();
+    }, 8000 + Math.random() * 4000);
+    
+    return () => {
+      clearTimeout(initialTimeout);
+      clearInterval(interval);
+    };
   }, []);
 
   const handleNavClick = (href: string, isRoute: boolean) => {
@@ -91,15 +125,22 @@ export const Header = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="relative">
-              <img 
+            <motion.div 
+              className="relative"
+              style={{ perspective: 800 }}
+            >
+              <motion.img 
                 src={healthkeyLogo} 
                 alt="HealthKey - Own Your Health Data" 
-                className="w-12 h-12 object-contain"
+                className="w-14 h-14 md:w-16 md:h-16 object-contain relative z-10"
                 loading="eager"
+                variants={logoSpinVariants}
+                initial="initial"
+                animate={shouldSpin ? "spin" : "initial"}
+                style={{ transformStyle: "preserve-3d" }}
               />
-              <div className="absolute inset-0 blur-xl opacity-60 bg-primary/40 rounded-xl" />
-            </div>
+              <div className="absolute inset-0 blur-xl opacity-60 bg-primary/40 rounded-xl scale-110" />
+            </motion.div>
             <span className="font-display font-bold text-xl text-foreground">
               Health<span className="gradient-text">Key</span>
             </span>
