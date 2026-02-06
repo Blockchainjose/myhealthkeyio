@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Mail, Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import healthkeyLogo from '@/assets/healthkey-app-logo.png';
+import healthkeyLogo from '@/assets/healthkey-app-logo.svg';
 
 // Custom X (formerly Twitter) icon component
 const XIcon = ({ className }: { className?: string }) => (
