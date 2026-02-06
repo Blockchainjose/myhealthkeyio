@@ -2,7 +2,7 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { Float, useTexture } from '@react-three/drei';
 import { useRef, useState, Suspense, useMemo } from 'react';
 import * as THREE from 'three';
-import healthkeyAppLogo from '@/assets/healthkey-app-logo.png';
+import healthkeyAppLogo from '@/assets/healthkey-app-logo.svg';
 
 // Hexagonal shard that orbits the token
 const DataShard = ({ index, total, hovered }: { index: number; total: number; hovered: boolean }) => {
